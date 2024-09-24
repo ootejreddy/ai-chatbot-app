@@ -75,10 +75,21 @@ const MessageInput: React.FC<MessageInputProps> = ({
     <div className="flex items-center p-4 border-t">
       <button
         onClick={isRecording ? stopRecording : startRecording}
-        className="p-2 rounded-full bg-blue-500 text-white mr-2"
+        className={`
+            p-2 rounded-full text-white mr-2
+            ${
+              isRecording
+                ? "bg-red-600 shadow-lg shadow-red-400/50 animate-pulse"
+                : "bg-blue-500 hover:bg-blue-600"
+            }
+          `}
         aria-label={isRecording ? "Stop recording" : "Start recording"}
       >
-        {isRecording ? <Square /> : <Mic />}
+        {isRecording ? (
+          <Square className="w-4 h-4 text-white" />
+        ) : (
+          <Mic className="w-4 h-4 text-white" />
+        )}
       </button>
       <input
         type="text"
