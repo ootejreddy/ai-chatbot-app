@@ -72,7 +72,7 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-grow flex flex-col max-w-5xl mx-auto my-8 border border-gray-300 shadow-lg rounded-lg overflow-hidden">
+      <div className="flex-grow flex flex-col w-11/12 mx-auto my-8 border border-gray-300 shadow-lg rounded-lg overflow-hidden">
         <h1 className="text-2xl font-bold text-center py-4 bg-blue-600 text-white">
           MR GYB AI Chatbot
         </h1>
