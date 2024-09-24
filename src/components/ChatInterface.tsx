@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
+import TypingAnimation from "./TypingAnimation"; // Add this import
 import { Message } from "@/types";
 
 const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // Add this state
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const ChatInterface: React.FC = () => {
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setIsLoading(true);
+    setIsTyping(true); // Start typing animation
 
     try {
       // TODO: Implement API call to OpenAI GPT
@@ -53,12 +56,14 @@ const ChatInterface: React.FC = () => {
       // Display error message to user
     } finally {
       setIsLoading(false);
+      setIsTyping(false); // Stop typing animation
     }
   };
 
   return (
     <div className="flex flex-col h-screen">
       <MessageList messages={messages} />
+      {isTyping && <TypingAnimation />} {/* Add this line */}
       <div ref={messagesEndRef} />
       <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
     </div>
