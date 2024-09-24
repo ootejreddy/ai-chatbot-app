@@ -14,6 +14,16 @@ const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    // Add initial greeting message
+    const greetingMessage: Message = {
+      id: Date.now(),
+      content: "Hello! I'm MR GYB AI Chatbot. How can I assist you today?",
+      sender: "bot",
+    };
+    setMessages([greetingMessage]);
+  }, []);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -62,10 +72,17 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <MessageList messages={messages} />
-      {isTyping && <TypingAnimation />} {/* Add this line */}
-      <div ref={messagesEndRef} />
-      <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      <div className="flex-grow flex flex-col max-w-5xl mx-auto my-8 border border-gray-300 shadow-lg rounded-lg overflow-hidden">
+        <h1 className="text-2xl font-bold text-center py-4 bg-blue-600 text-white">
+          MR GYB AI Chatbot
+        </h1>
+        <div className="flex-grow overflow-auto bg-gray-50">
+          <MessageList messages={messages} />
+          {isTyping && <TypingAnimation />} {/* Add this line */}
+          <div ref={messagesEndRef} />
+        </div>
+        <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      </div>
     </div>
   );
 };
