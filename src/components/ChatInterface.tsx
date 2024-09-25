@@ -8,7 +8,9 @@ const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false); // Add this state
+  const [isTTSEnabled, setIsTTSEnabled] = useState(false); // Add this line
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     scrollToBottom();
@@ -61,6 +63,22 @@ const ChatInterface: React.FC = () => {
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+      // Add TTS functionality here
+      if (isTTSEnabled) {
+        const audioResponse = await fetch("/api/tts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: data.message }),
+        });
+
+        if (audioResponse.ok) {
+          const audioBlob = await audioResponse.blob();
+          const audioUrl = URL.createObjectURL(audioBlob);
+          audioRef.current = new Audio(audioUrl);
+          audioRef.current.play();
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
       // Display error message to user
@@ -68,6 +86,16 @@ const ChatInterface: React.FC = () => {
       setIsLoading(false);
       setIsTyping(false); // Stop typing animation
     }
+  };
+
+  const toggleTTS = () => {
+    setIsTTSEnabled((prev) => {
+      if (prev && audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      return !prev;
+    });
   };
 
   return (
@@ -81,7 +109,12 @@ const ChatInterface: React.FC = () => {
           {isTyping && <TypingAnimation />} {/* Add this line */}
           <div ref={messagesEndRef} />
         </div>
-        <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+        <MessageInput
+          onSendMessage={handleSendMessage}
+          isLoading={isLoading}
+          isTTSEnabled={isTTSEnabled}
+          toggleTTS={toggleTTS}
+        />
       </div>
     </div>
   );

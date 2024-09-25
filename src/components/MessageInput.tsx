@@ -4,11 +4,15 @@ import { Mic, Square, Send, Headphones } from "lucide-react";
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
   isLoading: boolean;
+  isTTSEnabled: boolean;
+  toggleTTS: () => void;
 }
 
 const MessageInput: React.FC<MessageInputProps> = ({
   onSendMessage,
   isLoading,
+  isTTSEnabled,
+  toggleTTS,
 }) => {
   const [message, setMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -104,8 +108,13 @@ const MessageInput: React.FC<MessageInputProps> = ({
         </button>
       </div>
       <button
-        className="p-2 ml-2 rounded-full bg-blue-500 text-white hover:bg-blue-600"
-        aria-label="Listen to message"
+        onClick={toggleTTS}
+        className={`p-2 ml-2 rounded-full ${
+          isTTSEnabled ? "bg-blue-500" : "bg-gray-300"
+        } text-white hover:bg-blue-600`}
+        aria-label={
+          isTTSEnabled ? "Disable Text-to-Speech" : "Enable Text-to-Speech"
+        }
       >
         <Headphones className="w-6 h-6" />
       </button>
