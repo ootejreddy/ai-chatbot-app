@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Mic, Square, Send } from "lucide-react";
+import { Mic, Square, Send, Headphones } from "lucide-react";
 
 interface MessageInputProps {
   onSendMessage: (message: string) => void;
@@ -104,12 +104,18 @@ const MessageInput: React.FC<MessageInputProps> = ({
         </button>
       </div>
       <button
+        className="p-2 ml-2 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+        aria-label="Listen to message"
+      >
+        <Headphones className="w-6 h-6" />
+      </button>
+      <button
         onClick={handleSend}
         disabled={isLoading || !message.trim()}
-        className="p-2 ml-2 rounded-full bg-blue-500 text-white disabled:opacity-50"
+        className="p-2 ml-2 rounded-full bg-blue-500 text-white disabled:opacity-50 hover:bg-blue-600"
         aria-label="Send message"
       >
-        <Send className="w-7 h-7" />
+        <Send className="w-6 h-6" />
       </button>
     </div>
   );
