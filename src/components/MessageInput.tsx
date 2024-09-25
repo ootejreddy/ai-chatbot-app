@@ -73,40 +73,43 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
   return (
     <div className="flex items-center p-4 border-t">
-      <button
-        onClick={isRecording ? stopRecording : startRecording}
-        className={`
-            p-2 rounded-full text-white mr-2
+      <div className="relative flex-grow">
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Type a message..."
+          className="w-full p-2 pr-10 border rounded-lg"
+          disabled={isLoading}
+        />
+        <button
+          onClick={isRecording ? stopRecording : startRecording}
+          className={`
+            absolute right-0 top-0 bottom-0
+            px-3 rounded-r-lg text-white
             ${
               isRecording
                 ? "bg-red-600 shadow-lg shadow-red-400/50 animate-pulse"
                 : "bg-blue-500 hover:bg-blue-600"
             }
           `}
-        aria-label={isRecording ? "Stop recording" : "Start recording"}
-      >
-        {isRecording ? (
-          <Square className="w-4 h-4 text-white" />
-        ) : (
-          <Mic className="w-4 h-4 text-white" />
-        )}
-      </button>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Type a message..."
-        className="flex-grow p-2 border rounded-lg mr-2"
-        disabled={isLoading}
-      />
+          aria-label={isRecording ? "Stop recording" : "Start recording"}
+        >
+          {isRecording ? (
+            <Square className="w-4 h-4 text-white" />
+          ) : (
+            <Mic className="w-4 h-4 text-white" />
+          )}
+        </button>
+      </div>
       <button
         onClick={handleSend}
         disabled={isLoading || !message.trim()}
-        className="p-2 rounded-full bg-blue-500 text-white disabled:opacity-50"
+        className="p-2 ml-2 rounded-full bg-blue-500 text-white disabled:opacity-50"
         aria-label="Send message"
       >
-        <Send />
+        <Send className="w-7 h-7" />
       </button>
     </div>
   );
