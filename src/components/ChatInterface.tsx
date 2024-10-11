@@ -103,10 +103,13 @@ const ChatInterface: React.FC = () => {
     <div className="flex flex-col h-screen">
       <div className="flex-grow flex flex-col w-11/12 mx-auto my-8 border border-gray-300 shadow-lg rounded-lg overflow-hidden">
         <div className="flex items-center py-4 bg-blue-600 text-white">
-          <button className="mr-2">
+          <button className="ml-4 mr-4">
             <Menu size={30} /> {/* Hamburger icon */}
           </button>
-          <h1 className="text-2xl font-bold text-center">MR GYB AI Chatbot</h1>
+
+          <h1 className="text-2xl font-bold text-center flex-grow">
+            MR GYB AI Chatbot
+          </h1>
         </div>
 
         <div className="flex-grow overflow-auto bg-gray-50">
