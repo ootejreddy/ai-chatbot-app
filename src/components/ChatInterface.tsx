@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
 import TypingAnimation from "./TypingAnimation"; // Add this import
+import { Menu } from "lucide-react";
 import { Message } from "@/types";
 
 const ChatInterface: React.FC = () => {
@@ -101,9 +102,16 @@ const ChatInterface: React.FC = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-grow flex flex-col w-11/12 mx-auto my-8 border border-gray-300 shadow-lg rounded-lg overflow-hidden">
-        <h1 className="text-2xl font-bold text-center py-4 bg-blue-600 text-white">
-          MR GYB AI Chatbot
-        </h1>
+        <div className="flex items-center py-4 bg-blue-600 text-white">
+          <button className="ml-4 mr-4">
+            <Menu size={30} /> {/* Hamburger icon */}
+          </button>
+
+          <h1 className="text-2xl font-bold text-center flex-grow">
+            MR GYB AI Chatbot
+          </h1>
+        </div>
+
         <div className="flex-grow overflow-auto bg-gray-50">
           <MessageList messages={messages} />
           {isTyping && <TypingAnimation />} {/* Add this line */}
